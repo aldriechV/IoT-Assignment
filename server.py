@@ -7,9 +7,11 @@ import errno
 from dataclasses import dataclass
 import random
 import sys
+from collections.abc import MutableMapping
 
 maxPacketSize = 1024
-defaultPort = 0 #TODO: Set this to your preferred port
+defaultPort = 12345 #TODO: Set this to your preferred port
+exitSignal = False
 
 def GetFreePort(minPort: int = 1024, maxPort: int = 65535):
     for i in range(minPort, maxPort):
@@ -31,34 +33,25 @@ def GetServerData() -> []:
     return mongo.QueryDatabase();
 
 def ListenOnTCP(tcpSocket: socket.socket, socketAddress):
-    tcpSocket = CreateTCPSocket;
-
-    # Listen for incoming connections
-    tcpSocket.listen(5)
-
-    print("Echo server is listening on port", port)
-
-    client_socket, addr = tcpSocket.accept()
-
-
     while True:
       # Accept incoming connection
-      print('Connected to', addr)
       try:
       # Receive data from client
         while True:
-          data = client_socket.recv(1024)
+          data = tcpSocket.recv(1024)
           if not data:
             break
-    
+          print("Received data from client:", data.decode())
           data = GetServerData();
+          
+          for payload in data:
+             for sensor in payload:
+                print(sensor)
   
       finally:
         print("Connection closed")
-        # Close client socket
-        client_socket.close()
         #Close server socket
-        server_socket.close()
+        tcpSocket.close()
       break
 
     pass; #TODO: Implement TCP Code, use GetServerData to query the database.
