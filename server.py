@@ -43,10 +43,6 @@ def ListenOnTCP(tcpSocket: socket.socket, socketAddress):
             break
           print("Received data from client:", data.decode())
           data = GetServerData();
-          
-          for payload in data:
-             for sensor in payload:
-                print(sensor)
   
       finally:
         print("Connection closed")

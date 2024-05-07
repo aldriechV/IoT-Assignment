@@ -47,17 +47,17 @@ def QueryDatabase() -> []:
 		#Return that sensor data as a list
 
 		parsedData = defaultdict(lambda: {"freewayTime": 0, "value": 0})
-		for data in parsedData:
-			time = data.get("topic").split('/')[1]
-			value = data.get("payload", {})
+		for data in currentDocuments:
+			road = data.get("topic").split('/')[1]
+			payload = data.get("payload", {})
 
-			for key, value in value.items():
+			for key, value in payload.items():
 				if key in ["Sensor 1","Sensor 2","Sensor 3"]:
 					parsedData[key]["freewayTime"] += value
-					parsedData[key]["freewayTime"] += 1
+					parsedData[key]["count"] += 1
 		
 		for road, road_data in parsedData.items():
-			print(f"Total cars on {road}: {road_data['total_cars']}")
+			print(f"Total cars on {road}: {road_data['freewayTime']}")
 
 		return parsedData
 
