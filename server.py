@@ -43,15 +43,22 @@ def ListenOnTCP(tcpSocket: socket.socket, socketAddress):
             break
           print("Received data from client:", data.decode())
           data = GetServerData();
-  
+          avg = 0
+          current_road = ""
+          for road, road_data in data.items():
+            if avg == 0:
+                avg = road_data['freewayTime'] / road_data['count']
+                current_road = road
+            elif avg < road_data['freewayTime'] / road_data['count']:
+                avg = road_data['freewayTime'] / road_data['count']
+                current_road = road
+          servermessage = "The best road to take is " + current_road + " with an average time of " + str(avg)
+          tcpSocket.sendall(servermessage.encode())
       finally:
-        print("Connection closed")
-        #Close server socket
-        tcpSocket.close()
+              print("Connection closed")
+              #Close server socket
+              tcpSocket.close()
       break
-
-    pass; #TODO: Implement TCP Code, use GetServerData to query the database.
-
 def CreateTCPSocket() -> socket.socket:
     tcpSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
     tcpPort = defaultPort

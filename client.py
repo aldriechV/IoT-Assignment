@@ -7,7 +7,7 @@ import errno
 
 maxPacketSize = 1024
 defaultPort = 3000 # TODO: Change this to your expected port
-serverIP = '10.128.0.4' #TODO: Change this to your instance IP
+serverIP = 'localhost' #TODO: Change this to your instance IP
 
 tcpSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 try:

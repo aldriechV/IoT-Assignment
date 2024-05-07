@@ -46,7 +46,7 @@ def QueryDatabase() -> []:
 		#TODO: Parse the documents that you get back for the sensor data that you need
 		#Return that sensor data as a list
 
-		parsedData = defaultdict(lambda: {"freewayTime": 0, "value": 0})
+		parsedData = defaultdict(lambda: {"freewayTime": 0, "count": 0})
 		for data in currentDocuments:
 			road = data.get("topic").split('/')[1]
 			payload = data.get("payload", {})
